@@ -1,0 +1,27 @@
+[
+    {
+        "button": "button1",
+        "command": "goto_definition",
+        "count": 1,
+        "modifiers": [
+            "super"
+        ],
+        "press_command": "drag_select"
+    },
+    {
+        "button": "button1",
+        "command": "typescript_go_to_definition",
+        "context": [
+            {
+                "key": "selector",
+                "operand": "source.ts, source.tsx",
+                "operator": "equal"
+            }
+        ],
+        "count": 1,
+        "modifiers": [
+            "super"
+        ],
+        "press_command": "drag_select"
+    }
+]

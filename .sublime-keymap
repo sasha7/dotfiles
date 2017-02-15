@@ -1,0 +1,106 @@
+[
+    {
+        "args": {
+            "single_line": false
+        },
+        "command": "reindent",
+        "keys": [
+            "super+shift+l"
+        ]
+    },
+    {
+        "command": "expand_abbreviation_by_tab",
+        "context": [
+            {
+                "key": "selector",
+                "match_all": true,
+                "operand": "meta.group.braces.round.jsx, text.html",
+                "operator": "equal"
+            },
+            {
+                "key": "selection_empty",
+                "match_all": true
+            },
+            {
+                "key": "has_next_field",
+                "match_all": true,
+                "operand": false,
+                "operator": "equal"
+            },
+            {
+                "key": "auto_complete_visible",
+                "match_all": true,
+                "operand": false,
+                "operator": "equal"
+            },
+            {
+                "key": "is_abbreviation",
+                "match_all": true
+            }
+        ],
+        "keys": [
+            "tab"
+        ]
+    },
+    {
+        "args": {
+            "forward": false,
+            "sub_words": true
+        },
+        "command": "delete_word",
+        "keys": [
+            "ctrl+w"
+        ]
+    },
+    {
+        "command": "wrap_as_you_type",
+        "context": [
+            {
+                "key": "setting.is_widget",
+                "match_all": true,
+                "operand": false,
+                "operator": "equal"
+            },
+            {
+                "key": "emmet_action_enabled.wrap_as_you_type",
+                "match_all": true
+            }
+        ],
+        "keys": [
+            "ctrl+shift+w"
+        ]
+    },
+    {
+        "command": "expand_fqcn",
+        "keys": [
+            "f9"
+        ]
+    },
+    {
+        "args": {
+            "leading_separator": true
+        },
+        "command": "expand_fqcn",
+        "keys": [
+            "shift+f9"
+        ]
+    },
+    {
+        "command": "find_use",
+        "keys": [
+            "f10"
+        ]
+    },
+    {
+        "command": "import_namespace",
+        "keys": [
+            "f8"
+        ]
+    },
+    {
+        "command": "goto_definition_scope",
+        "keys": [
+            "shift+f12"
+        ]
+    }
+]
