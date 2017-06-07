@@ -1,0 +1,17 @@
+# emacs backup files
+.#*
+
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.sass-cache
+
+# Vim swap and backup files
+*.swo
+*.swp
+
+# ctags files
+tags

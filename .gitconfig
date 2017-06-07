@@ -1,0 +1,103 @@
+[user]
+  name = Sasa Macakanja
+  email = sasa.macakanja@gmail.com
+	signingkey = B8772064565FC3AE
+[alias]
+  st = status
+  ci = commit
+  co = checkout
+  br = branch
+  df = diff
+  sneak = commit -a --amend --no-edit
+  lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+  lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+  lg3 = log --graph --abbrev-commit --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all
+  lg = !"git lg1"
+  cob = "checkout -b"
+  rb = "!MERGE_BASE=$(git merge-base origin/master HEAD); git diff -M --full-index $MERGE_BASE HEAD"
+  rom = "rebase origin/master"
+  dom = "diff origin/master"
+  ms = "merge --squash"
+  comp = !"git co master && git pull"
+  rmorig = !"git status --porcelain | awk '/^\\?.*orig/{print $2}' | xargs rm -v"
+  rmpound = !"git status --porcelain | awk '/^\\??.*\\/#[^\\/]*#$/{print $2}' | xargs rm -v"
+  rmuntracked = !"git status --porcelain | awk '/^\\?/{print $2}' | xargs rm -v"
+  todo = !"git diff --name-only origin/master | xargs grep -i -C3 '@todo'"
+  rmtrains = !"git branch | grep 'deploy_' | xargs git branch -D"
+  trains = !"echo -n 'Fetching...' && git fetch -q && echo ' DONE' && git for-each-ref --count=5 --sort=-committerdate --format='%(committerdate:relative) %09 %(refname:short)' refs/remotes/origin/deploy_$(date +%Y_%m_%d)_*"
+  train = !"git fetch -q && git for-each-ref --count=1 --sort=-committerdate --format='%(refname:short)' refs/remotes/origin/deploy_*"
+  board = !"git train | xargs git checkout -t"
+  # Set upstream tracking much faster
+  publish = "! git push -u origin $(git rev-parse --abbrev-ref HEAD)"
+  # Show number of commits from all authors.
+  stats = shortlog -sn
+  # Show detailed logs
+  graph = log --graph --decorate --stat --date=iso --all
+  # Show simplified logs
+  overview = log --oneline --no-merges
+  recap = log --oneline --no-merges --author=sasa.macakanja@gmail.com
+   # See today’s work
+  today = log --since=\"00:00:00\" --all --no-merges --oneline --author=sasa.macakanja@gmail.com
+  # Empty line between results from different files.
+  find = "!git grep --break -C1"
+  # Show your ten most recently checked out branches
+  recent = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format="%(refname:short)"
+  # Compare commits in one branch against another, e.g. $ git compare tkt-0021 to develop
+  compare = "!f() { git log --oneline $1..$2;  }; f"
+  # See which commits are on your local branch that aren’t on the remote
+  local = "! git log --oneline --no-merges origin/$(git rev-parse --abbrev-ref HEAD).."
+  # See which commits are on the remote that aren’t on your local branch
+  upstream = "! git fetch && git log --oneline --no-merges ..origin/$(git rev-parse --abbrev-ref HEAD)"
+  # Nicer diffs for prose
+  wdiff = diff --word-diff
+  # Make it possible to diff minified code (eww…)
+  mindiff = diff -w --word-diff-regex=. --color-words -U0
+[credentials]
+  helper = osxkeychain
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  ui = true
+  pager = true
+[color "status"]
+  added = green
+  changed = blue
+  untracked = red
+[color "diff"]
+  meta = yellow
+  old = red
+  new = green
+[core]
+  editor = vim
+  excludesfile = /Users/sasa/.gitignore
+  whitespace = warn
+[github]
+  user = sasha7
+[ghi]
+  token = !security find-internet-password -a sasha7 -s github.com -l 'ghi token' -w
+[merge]
+  tool = vimdiff
+  conflictstyle = diff3
+[push]
+  default = simple
+[pull]
+  rebase = true
+[rerere]
+  enabled = true
+[fetch]
+  prune = true
+[commit]
+  template = /Users/sasa/.git-commit-template
+  gpgsign = true
+[diff]
+  tool = vimdiff
+[difftool]
+  prompt = false
+[help]
+  autocorrect = 1
+[mergetool]
+  keepBackup = false
+[gpg]
+	program = gpg2
