@@ -71,7 +71,7 @@ git config --global gpg.program gpg2
 # the Mac OS Keychain.
 
 # Step 8
-# Trust your own key 
+# Trust your own key
 
 gpg2 --edit-key [YOUR GPG KEY ID]
 # enter 'trust' and select 5 as a top trust level
@@ -80,9 +80,9 @@ gpg2 --edit-key [YOUR GPG KEY ID]
 
 ## Signing commmits
 ```
-git commit -S -m "Cool new feature"
+git commit -S -m "Cool new feature" # or use --gpg-sign=[YOUR GPG ID]
 
-# Git log doesn’t display signatures by default, but you can force it to with 
+# Git log doesn’t display signatures by default, but you can force it to with
 # the --show-signature option:
 
 git log --show-signature
