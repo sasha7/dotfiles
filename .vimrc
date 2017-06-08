@@ -42,7 +42,7 @@ filetype plugin indent on
 syntax enable
 
 " Display line for cursor
-set cursorline
+set nocursorline
 
 " In Git commit messages, also colour the 51st column (for titles)
 autocmd FileType gitcommit set colorcolumn+=51
@@ -51,7 +51,7 @@ autocmd FileType gitcommit set colorcolumn+=51
 set number
 
 " Set relative line numbers...
-set relativenumber
+set norelativenumber
 
 let g:netrw_liststyle = 3
 
