@@ -1,0 +1,49 @@
+function nicediff {
+  diff -W `tput cols` -y "$@" | colordiff | less
+}
+
+function serve {
+  if [ $# -gt 0 ]; then
+    port="$1"
+  else
+    port=8000
+  fi
+
+  which python > /dev/null && python -m SimpleHTTPServer $port
+}
+
+function stock {
+  if [ -z "$1" ]; then
+    echo "Display current stock prices from Yahoo! Finance."
+    echo
+    echo "Usage: $0 SYMBOL [SYMBOL ...]"
+    echo
+    echo "  SYMBOL  A valid stock ticker symbol. You may supply several"
+    echo "          symbols separated by spaces."
+    return 1
+  fi
+
+  stocks="${(j:+:)@}"
+  values="$(curl -s "http://download.finance.yahoo.com/d/quotes.csv?s=${stocks}&f=nl1c1")"
+
+  printf '\e[1;4m%+30s %+7s %+7s\e[0m\n' 'Name' 'Price' 'Change'
+  for line in "${(f)values}"; do
+    columns=("${(@s:,:)line}")
+    name="${columns[1]:1:-1}"
+    price="${columns[2]}"
+    change="${columns[3]}"
+
+    if [[ "${change[1]}" == "-" ]]; then
+      color='\e[31m'
+    else
+      color='\e[32m'
+    fi
+
+    printf '%+30s $%-7.2f %b$%-7.2f%b\n' "${name}" "${price}" "${color}" "${change}" '\e[0m'
+  done
+}
+
+function mp4tomp3 {
+  for i in *.mp4; do ffmpeg -i "$i" -q:a 0 -map a "$(basename "${i/.mp4}").mp3"; done;
+}
+
