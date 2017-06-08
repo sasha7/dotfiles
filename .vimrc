@@ -6,7 +6,7 @@
 set nocompatible
 " Use UTF-8 by default
 set encoding=utf-8
-set fileencoding=utf-8 
+set fileencoding=utf-8
 
 " Let's use Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -53,6 +53,7 @@ set number
 " Set relative line numbers...
 set norelativenumber
 
+set regexpengine=0
 let g:netrw_liststyle = 3
 
 highlight Comment cterm=italic
@@ -104,8 +105,6 @@ set wildignore+=*.pdf,*.psd
 set wildignore+=node_modules/*,bower_components/*
 
 " Disable indentLine by default
-let g:indentLine_enabled = 0
-
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
 let NERDTreeShowHidden=1
@@ -160,7 +159,7 @@ set shiftround                    " use multiple of shiftwidth when indenting wi
 set noignorecase                  " do not ignore case when searching
 set nogdefault                    " do not search/replace 'globally' (on a line) by default
 set smartcase                     " ignore case if search pattern is all lowercase, case-sensitive otherwise
-set nohlsearch                    " don't keep results highlighted after searching
+set hlsearch                    " don't keep results highlighted after searching
 nnoremap <silent> <leader>, :noh<cr> " Stop highlight after searching
 set incsearch                     " highlight as we type
 set showmatch
@@ -194,7 +193,7 @@ let g:html_indent_tags = 'li\|p'
 " Setup gitgutter plugin
 let g:gitgutter_sign_column_always = 1
 
-" F2 before pasting to preserve indentation 
+" F2 before pasting to preserve indentation
 set pastetoggle=<F2>
 
 if executable('ag')
@@ -231,9 +230,6 @@ set statusline+=\[%{&fileformat}\]
 set statusline+=\ %p%%
 set statusline+=\ %l:%c
 set statusline+=\
-
-
-
 
 " Key mappings
 " jj to throw you into normal mode from insert mode
@@ -278,11 +274,11 @@ inoremap <C-a> <Esc>I
 " Map ctrl+n to toggle NERDTree
 map <C-n> :NERDTreeToggle<cr>
 
-" tab navigation mappings
+" tab navigati>on mappings
 map tn :tabn<CR>
 map tp :tabp<CR>
-map tm :tabm 
-map tt :tabnew 
+map tm :tabm
+map tt :tabnew
 map ts :tab split<CR>
 map <C-S-Right> :tabn<CR>
 imap <C-S-Right> <ESC>:tabn<CR>
