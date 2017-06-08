@@ -297,8 +297,18 @@ noremap <C-c> "*y
 " Switch to previous window
 nnoremap <Leader>` <C-w><C-p>
 
-
-
+" A quick way to move lines of text up or down
+" In normal mode or in insert mode, press Alt-j to move the current line down,
+" or press Alt-k to move the current line up.
+" After visually selecting a block of lines (for example, by pressing V then
+" moving the cursor down), press Alt-j to move the whole block down, or press
+" Alt-k to move the block up.
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " Abbreviations and auto-completions
 
