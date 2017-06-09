@@ -252,8 +252,6 @@ nnoremap gF <C-w>f
 nnoremap <Leader>/ :set hlsearch!<CR>
 " Make tabbing persistent in visual mode
 vnoremap <Tab> >gv
-" Toggle indentLine plugin on/off
-nnoremap <Leader>i :IndentLinesToggle<CR>
 " Toggle pasting mode
 nnoremap <Leader>p :set paste!<CR>
 " Toggle light/dark backgrounds
