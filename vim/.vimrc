@@ -31,6 +31,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'garbas/vim-snipmate'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'raimondi/delimitMate'
 call vundle#end()
 
 " Syntax highlighting
