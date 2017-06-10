@@ -12,7 +12,9 @@ set fileencoding=utf-8
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'wincent/command-t'
+" Plugin 'wincent/command-t'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'burke/matcher'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'jason0x43/vim-js-indent'
@@ -53,6 +55,44 @@ set number
 
 " Set relative line numbers...
 set norelativenumber
+
+let g:ctrlp_dotfiles=0
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+
+if executable('matcher')
+  let g:ctrlp_match_func = { 'match': 'GoodMatch' }
+
+  function! GoodMatch(items, str, limit, mmode, ispath, crfile, regex)
+
+    " Create a cache file if not yet exists
+    let cachefile = ctrlp#utils#cachedir().'/matcher.cache'
+    if !( filereadable(cachefile) && a:items == readfile(cachefile) )
+      call writefile(a:items, cachefile)
+    endif
+    if !filereadable(cachefile)
+      return []
+    endif
+
+    " a:mmode is currently ignored. In the future, we should probably do
+    " something about that. the matcher behaves like "full-line".
+    let cmd = 'matcher --limit '.a:limit.' --manifest '.cachefile.' '
+    if !( exists('g:ctrlp_dotfiles') && g:ctrlp_dotfiles )
+      " let cmd = cmd.'--no-dotfiles '
+    endif
+    let cmd = cmd.a:str
+
+    return split(system(cmd), "\n")
+
+  endfunction
+end
 
 set regexpengine=0
 let g:netrw_liststyle = 3
@@ -103,8 +143,9 @@ set wildmenu
 " Don’t offer to open certain files/directories
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png,*.ico
 set wildignore+=*.pdf,*.psd
-set wildignore+=node_modules/*,bower_components/*
-
+set wildignore+=*/node_modules/*
+set wildignore+=*/dist/*
+set wildignore+=*/bower_components/*
 " Disable indentLine by default
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
@@ -114,8 +155,7 @@ set laststatus=2  " Always display the status line
 
 set numberwidth=3
 set lazyredraw
-set wildignore+=**/node_modules   " ignores node_modules
-set wildignore+=**/spec/reports   " ignores spec/reports
+" let g:CommandTWildIgnore=&wildignore . ",*/node_modules/*" . "*/dist"
 set ruler                         " show current position
 set showmode                      " show what mode we're currently editing in
 set showmatch                     " show matching brackets
@@ -124,7 +164,7 @@ set nospell                       " no spell checking
 set wrap!                         " no word wrapping
 
 " theme
-set background=dark
+set background=light
 set t_Co=256
 let g:solarized_termtrans=1
 let g:solarized_bold = 1
@@ -145,7 +185,7 @@ set autoindent                    " always set autoindenting on
 set copyindent                    " copy indentation on new lines
 set smartindent                   " indent on new blocks
 " Write swapfiles to disk a little sooner
-set updatetime=250
+" set updatetime=250
 " Allow modelines
 set modeline
 set expandtab                     " expand tabs by default (overloadable per file type later)
@@ -220,7 +260,7 @@ endfunction
 set statusline=
 set statusline+=%#PmenuSel#
 set statusline+=%{StatuslineGit()}
- " set statusline+=%#LineNr#
+" set statusline+=%#LineNr#
 set statusline+=\ %f
 set statusline+=%m\
 set statusline+=%=
@@ -273,7 +313,7 @@ inoremap <C-a> <Esc>I
 " Map ctrl+n to toggle NERDTree
 map <C-n> :NERDTreeToggle<cr>
 
-" tab navigati>on mappings
+" tab navigation mappings
 map tn :tabn<CR>
 map tp :tabp<CR>
 map tm :tabm
@@ -311,6 +351,8 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " indentation
 map <Leader>i mzgg=G`z
+
+:nnoremap <silent> <leader>e :CtrlPMRUFiles<CR>
 
 " Abbreviations and auto-completions
 
