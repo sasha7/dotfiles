@@ -34,6 +34,7 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'raimondi/delimitMate'
+Plugin 'sbdchd/neoformat'
 call vundle#end()
 
 " Syntax highlighting
@@ -56,7 +57,10 @@ set number
 " Set relative line numbers...
 set norelativenumber
 
-let g:ctrlp_dotfiles=0
+" Fix pasting when using tmux
+set clipboard=unnamed
+
+let g:ctrlp_dotfiles=1
 
 " The Silver Searcher
 if executable('ag')
@@ -79,7 +83,7 @@ if executable('matcher')
     endif
     if !filereadable(cachefile)
       return []
-    endif
+    end1f
 
     " a:mmode is currently ignored. In the future, we should probably do
     " something about that. the matcher behaves like "full-line".
@@ -138,10 +142,8 @@ set splitbelow
 " Set the working directory to wherever the open file lives (can be problematic)
 set autochdir
 " set path+=**
-" Show file options above the command line
-set wildmenu
 " Don’t offer to open certain files/directories
-set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png,*.ico
+set wildignore+=.DS_Store,*.bmp,*.gif,*.ico,*.jpg,*.png,*.ico
 set wildignore+=*.pdf,*.psd
 set wildignore+=*/node_modules/*
 set wildignore+=*/dist/*
@@ -155,7 +157,6 @@ set laststatus=2  " Always display the status line
 
 set numberwidth=3
 set lazyredraw
-" let g:CommandTWildIgnore=&wildignore . ",*/node_modules/*" . "*/dist"
 set ruler                         " show current position
 set showmode                      " show what mode we're currently editing in
 set showmatch                     " show matching brackets
@@ -164,7 +165,7 @@ set nospell                       " no spell checking
 set wrap!                         " no word wrapping
 
 " theme
-set background=light
+set background=dark
 set t_Co=256
 let g:solarized_termtrans=1
 let g:solarized_bold = 1
@@ -352,7 +353,7 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 " indentation
 map <Leader>i mzgg=G`z
 
-:nnoremap <silent> <leader>e :CtrlPMRUFiles<CR>
+:nnoremap <silent> <leader>b :CtrlPMRU<CR>
 
 " Abbreviations and auto-completions
 
