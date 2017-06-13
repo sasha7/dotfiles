@@ -326,7 +326,9 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 " indentation
 map <Leader>i mzgg=G`z
 
-:nnoremap <silent> <leader>b :CtrlPMRU<CR>
+" assign buffer list and most recent used with ctrlp plugin
+nnoremap <silent> <leader>e :CtrlPMRU<CR>
+nnoremap <silent> <leader>b :CtrlPBuffer<CR>
 
 " Abbreviations and auto-completions
 
