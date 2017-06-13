@@ -12,9 +12,7 @@ set fileencoding=utf-8
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
-" Plugin 'wincent/command-t'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'burke/matcher'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'jason0x43/vim-js-indent'
@@ -31,7 +29,6 @@ Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'honza/vim-snippets'
 Plugin 'garbas/vim-snipmate'
-Plugin 'airblade/vim-gitgutter'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'raimondi/delimitMate'
 Plugin 'sbdchd/neoformat'
@@ -52,7 +49,7 @@ set nocursorline
 autocmd FileType gitcommit set colorcolumn+=51
 
 " ...but absolute numbers on the current line (hybrid numbering)
-set number
+set nonumber
 
 " Set relative line numbers...
 set norelativenumber
@@ -60,43 +57,17 @@ set norelativenumber
 " Fix pasting when using tmux
 set clipboard=unnamed
 
-let g:ctrlp_dotfiles=1
-
 " The Silver Searcher
 if executable('ag')
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
 endif
-
-if executable('matcher')
-  let g:ctrlp_match_func = { 'match': 'GoodMatch' }
-
-  function! GoodMatch(items, str, limit, mmode, ispath, crfile, regex)
-
-    " Create a cache file if not yet exists
-    let cachefile = ctrlp#utils#cachedir().'/matcher.cache'
-    if !( filereadable(cachefile) && a:items == readfile(cachefile) )
-      call writefile(a:items, cachefile)
-    endif
-    if !filereadable(cachefile)
-      return []
-    end1f
-
-    " a:mmode is currently ignored. In the future, we should probably do
-    " something about that. the matcher behaves like "full-line".
-    let cmd = 'matcher --limit '.a:limit.' --manifest '.cachefile.' '
-    if !( exists('g:ctrlp_dotfiles') && g:ctrlp_dotfiles )
-      " let cmd = cmd.'--no-dotfiles '
-    endif
-    let cmd = cmd.a:str
-
-    return split(system(cmd), "\n")
-
-  endfunction
-end
 
 set regexpengine=0
 let g:netrw_liststyle = 3

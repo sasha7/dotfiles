@@ -91,4 +91,5 @@ EDITOR=vim
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="subl ~/.oh-my-zsh"
 alias homestead='cd ~/Homestead56 && vagrant $*'
+alias ag='ag --path-to-ignore ~/.gitignore'
 
