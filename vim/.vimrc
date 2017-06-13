@@ -32,6 +32,7 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'raimondi/delimitMate'
 Plugin 'sbdchd/neoformat'
+Plugin 'rking/ag.vim'
 call vundle#end()
 
 " Syntax highlighting
@@ -60,7 +61,8 @@ set clipboard=unnamed
 " The Silver Searcher
 if executable('ag')
   " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
+  set grepprg=ag\ --nogroup\ --nocolor\ --column
+  set grepformat=%f:%l:%c%m
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
