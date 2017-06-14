@@ -1,4 +1,5 @@
 " .vimrc
+"
 
 " Setup
 
@@ -7,7 +8,6 @@ set nocompatible
 " Use UTF-8 by default
 set encoding=utf-8
 set fileencoding=utf-8
-
 " Let's use Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -50,13 +50,22 @@ set nocursorline
 autocmd FileType gitcommit set colorcolumn+=51
 
 " ...but absolute numbers on the current line (hybrid numbering)
-set nonumber
+set number
 
 " Set relative line numbers...
 set norelativenumber
 
 " Fix pasting when using tmux
 set clipboard=unnamed
+
+
+set hidden                      " hide buffers instead of closing them this
+                                "    means that the current buffer can be put
+                                "    to background without being written; and
+                                "    that marks and undo history are preserved
+
+" Faster escape timeout
+set timeoutlen=1000 ttimeoutlen=0
 
 " The Silver Searcher
 if executable('ag')
@@ -91,7 +100,7 @@ autocmd BufRead,BufNewFile *.hbs set filetype=html
 " Optimize for fast terminal connections
 set ttyfast
 
-set spell
+set nospell
 
 " Jsdoc plugin
 let g:used_javascript_libs = 'jquery,underscore,backbone,react,lo-dash'
@@ -135,7 +144,7 @@ set showmode                      " show what mode we're currently editing in
 set showmatch                     " show matching brackets
 set clipboard+=unnamed            " yanks to clipboard
 set nospell                       " no spell checking
-set wrap!                         " no word wrapping
+set nowrap                        " no lines wrapping
 
 " theme
 set background=dark
@@ -174,7 +183,7 @@ set shiftround                    " use multiple of shiftwidth when indenting wi
 set noignorecase                  " do not ignore case when searching
 set nogdefault                    " do not search/replace 'globally' (on a line) by default
 set smartcase                     " ignore case if search pattern is all lowercase, case-sensitive otherwise
-set hlsearch                    " don't keep results highlighted after searching
+set hlsearch                      " don't keep results highlighted after searching
 nnoremap <silent> <leader>, :noh<cr> " Stop highlight after searching
 set incsearch                     " highlight as we type
 set showmatch
@@ -189,7 +198,14 @@ set list listchars=tab:»·,trail:·,nbsp:·
 set nobackup
 set nowritebackup
 set noswapfile
-set history=50
+
+" history and undo levels
+set history=1000
+set undolevels=1000
+
+set visualbell           " don't beep
+set noerrorbells         " don't beep
+
 
 set incsearch                     " show search matches as you type
 set wildmenu                      " show list instead of just completing
@@ -199,6 +215,8 @@ set wrapmargin=0
 
 " Colour the column just after our line limit so that we don’t type over it
 set colorcolumn=+1
+
+set nomodeline                  " disable mode lines (security measure)
 
 " HTML Editing
 set matchpairs+=<:>
@@ -247,6 +265,10 @@ set statusline+=\ %l:%c
 set statusline+=\
 
 " Key mappings
+"
+" change the mapleader from \ to ,
+let mapleader=","
+
 " jj to throw you into normal mode from insert mode
 inoremap jj <Esc>
 " jk to throw you into normal mode from insert mode
@@ -284,6 +306,14 @@ nnoremap <Leader>s :split **/*
 inoremap <C-e> <Esc>A
 inoremap <C-a> <Esc>I
 
+" Speed up scrolling of the viewport slightly
+nnoremap <C-e> 2<C-e>
+nnoremap <C-y> 2<C-y>
+
+" This turns off Vim’s crazy default regex chars and makes searches use normal regexes
+nnoremap / /\v
+vnoremap / /\v
+
 " Map ctrl+n to toggle NERDTree
 map <C-n> :NERDTreeToggle<cr>
 
@@ -297,6 +327,9 @@ map <C-S-Right> :tabn<CR>
 imap <C-S-Right> <ESC>:tabn<CR>
 map <C-S-Left> :tabp<CR>
 imap <C-S-Left> <ESC>:tabp<CR>
+
+" when you forgot to sudo before editing a file that requires root privileges
+cmap w!! w !sudo tee % >/dev/null
 
 " navigate windows
 nnoremap <c-j> <c-w>j
@@ -324,11 +357,49 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " indentation
-map <Leader>i mzgg=G`z
+map <leader>i mzgg=G`z
+
+" Format file with Neoformat
+map <leader>b :Neoformat<CR>
 
 " assign buffer list and most recent used with ctrlp plugin
 nnoremap <silent> <leader>e :CtrlPMRU<CR>
 nnoremap <silent> <leader>b :CtrlPBuffer<CR>
+
+" Handy command-line mode
+nnoremap ; :
+" <Esc> is too annoying to type
+inoremap jkj <Esc>
+" Screen sucks, redraw everything
+nnoremap <Leader>r :redraw!<CR>
+" Make Q meaningless (Q: Entering to Ex mode)
+nnoremap Q <nop>
+
+""" Tabs {{{
+  nnoremap <silent> <Tab><Tab> :tabnew<CR>
+  nnoremap <silent> <Tab>q :tabclose<CR>
+  nnoremap <silent> <Tab>o :tabonly<CR>
+  nnoremap <silent> <Tab>s :tabs<CR>
+  nnoremap <silent> <Tab>^ :tabfirst<CR>
+  nnoremap <silent> <Tab>$ :tablast<CR>
+  nnoremap <silent> <Tab>k :tabfirst<CR>
+  nnoremap <silent> <Tab>j :tablast<CR>
+  nnoremap <silent> <Tab>l :tabnext<CR>
+  nnoremap <silent> <Tab>h :tabprevious<CR>
+  nnoremap <silent> <Tab>n :tabnext<CR>
+  nnoremap <silent> <Tab>p :tabprevious<CR>
+  nnoremap <silent> <Tab><Right> :tabnext<CR>
+  nnoremap <silent> <Tab><Left> :tabprevious<CR>
+  nnoremap <silent> <Tab>1 :tabnext 1<CR>
+  nnoremap <silent> <Tab>2 :tabnext 2<CR>
+  nnoremap <silent> <Tab>3 :tabnext 3<CR>
+  nnoremap <silent> <Tab>4 :tabnext 4<CR>
+  nnoremap <silent> <Tab>5 :tabnext 5<CR>
+  nnoremap <silent> <Tab>6 :tabnext 6<CR>
+  nnoremap <silent> <Tab>7 :tabnext 7<CR>
+  nnoremap <silent> <Tab>8 :tabnext 8<CR>
+  nnoremap <silent> <Tab>9 :tabnext 9<CR>
+" }}}
 
 " Abbreviations and auto-completions
 

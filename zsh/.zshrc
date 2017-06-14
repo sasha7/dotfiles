@@ -2,7 +2,10 @@
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export TERM=xterm-256color
 
-# source ~/.zsh_functions
+# 10ms for key sequences
+export KEYTIMEOUT=1
+
+source ~/.zsh_functions
 
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/sasa/.oh-my-zsh
