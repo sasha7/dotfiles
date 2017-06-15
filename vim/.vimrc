@@ -14,10 +14,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'jason0x43/vim-js-indent'
 Plugin 'mattn/emmet-vim'
-Plugin 'motemen/git-vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mileszs/ack.vim'
 Plugin 'christoomey/vim-tmux-navigator'
@@ -25,14 +22,11 @@ Plugin 'othree/yajs.vim'
 Plugin 'othree/es.next.syntax.vim'
 Plugin 'vim-scripts/SyntaxComplete'
 Plugin 'othree/javascript-libraries-syntax.vim'
-Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
-Plugin 'honza/vim-snippets'
-Plugin 'garbas/vim-snipmate'
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'raimondi/delimitMate'
 Plugin 'sbdchd/neoformat'
 Plugin 'rking/ag.vim'
+Plugin 'Raimondi/delimitMate'
 call vundle#end()
 
 " Syntax highlighting
@@ -169,8 +163,6 @@ set copyindent                    " copy indentation on new lines
 set smartindent                   " indent on new blocks
 " Write swapfiles to disk a little sooner
 " set updatetime=250
-" Allow modelines
-set modeline
 set expandtab                     " expand tabs by default (overloadable per file type later)
 set smarttab                      " insert tabs on the start of a line according to shiftwidth, not tabstop
 set tabstop=2                     " tab spaces size
@@ -203,10 +195,6 @@ set noswapfile
 set history=1000
 set undolevels=1000
 
-set visualbell           " don't beep
-set noerrorbells         " don't beep
-
-
 set incsearch                     " show search matches as you type
 set wildmenu                      " show list instead of just completing
 set wildmode=list:longest,full    " command <Tab> completion, list matches, then longest common part, then all
@@ -238,31 +226,6 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 
 " auto change the directory to the current file I am currently editing
 autocmd BufEnter * lcd %:p:h
-
-" Custom status line
-function! GitBranch()
-  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-endfunction
-
-function! StatuslineGit()
-  let l:branchname = GitBranch()
-  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
-endfunction
-
-set statusline=
-set statusline+=%#PmenuSel#
-set statusline+=%{StatuslineGit()}
-" set statusline+=%#LineNr#
-set statusline+=\ %f
-set statusline+=%m\
-set statusline+=%=
-" set statusline+=%#CursorColumn#
-set statusline+=\ %y
-set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
-set statusline+=\[%{&fileformat}\]
-set statusline+=\ %p%%
-set statusline+=\ %l:%c
-set statusline+=\
 
 " Key mappings
 "
@@ -360,7 +323,7 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 map <leader>i mzgg=G`z
 
 " Format file with Neoformat
-map <leader>b :Neoformat<CR>
+map <leader>m :Neoformat<CR>
 
 " assign buffer list and most recent used with ctrlp plugin
 nnoremap <silent> <leader>e :CtrlPMRU<CR>
@@ -374,32 +337,6 @@ inoremap jkj <Esc>
 nnoremap <Leader>r :redraw!<CR>
 " Make Q meaningless (Q: Entering to Ex mode)
 nnoremap Q <nop>
-
-""" Tabs {{{
-  nnoremap <silent> <Tab><Tab> :tabnew<CR>
-  nnoremap <silent> <Tab>q :tabclose<CR>
-  nnoremap <silent> <Tab>o :tabonly<CR>
-  nnoremap <silent> <Tab>s :tabs<CR>
-  nnoremap <silent> <Tab>^ :tabfirst<CR>
-  nnoremap <silent> <Tab>$ :tablast<CR>
-  nnoremap <silent> <Tab>k :tabfirst<CR>
-  nnoremap <silent> <Tab>j :tablast<CR>
-  nnoremap <silent> <Tab>l :tabnext<CR>
-  nnoremap <silent> <Tab>h :tabprevious<CR>
-  nnoremap <silent> <Tab>n :tabnext<CR>
-  nnoremap <silent> <Tab>p :tabprevious<CR>
-  nnoremap <silent> <Tab><Right> :tabnext<CR>
-  nnoremap <silent> <Tab><Left> :tabprevious<CR>
-  nnoremap <silent> <Tab>1 :tabnext 1<CR>
-  nnoremap <silent> <Tab>2 :tabnext 2<CR>
-  nnoremap <silent> <Tab>3 :tabnext 3<CR>
-  nnoremap <silent> <Tab>4 :tabnext 4<CR>
-  nnoremap <silent> <Tab>5 :tabnext 5<CR>
-  nnoremap <silent> <Tab>6 :tabnext 6<CR>
-  nnoremap <silent> <Tab>7 :tabnext 7<CR>
-  nnoremap <silent> <Tab>8 :tabnext 8<CR>
-  nnoremap <silent> <Tab>9 :tabnext 9<CR>
-" }}}
 
 " Abbreviations and auto-completions
 
