@@ -15,13 +15,13 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'mattn/emmet-vim'
-Plugin 'pangloss/vim-javascript'
+" Plugin 'pangloss/vim-javascript'
 Plugin 'mileszs/ack.vim'
 Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'othree/yajs.vim'
-Plugin 'othree/es.next.syntax.vim'
-Plugin 'vim-scripts/SyntaxComplete'
-Plugin 'othree/javascript-libraries-syntax.vim'
+" Plugin 'othree/yajs.vim'
+" Plugin 'othree/es.next.syntax.vim'
+" Plugin 'vim-scripts/SyntaxComplete'
+" Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'tomtom/tlib_vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'sbdchd/neoformat'
@@ -86,6 +86,15 @@ highlight htmlArg cterm=italic
 " Tell Vim to look in my home directory for more ctags
 set tags+=tags;$HOME
 
+" Enable alignment
+let g:neoformat_basic_format_align = 1
+
+" Enable tab to spaces conversion
+let g:neoformat_basic_format_retab = 1
+
+" Enable trimmming of trailing whitespace
+let g:neoformat_basic_format_trim = 1
+
 " Set relevant filetypes
 "au BufRead,BufNewFile *.scss set filetype=css
 autocmd BufRead,BufNewFile *.md set filetype=markdown
@@ -116,7 +125,7 @@ set formatoptions+=jroqn1
 set splitright
 set splitbelow
 " Set the working directory to wherever the open file lives (can be problematic)
-set autochdir
+" set autochdir
 " set path+=**
 " Don’t offer to open certain files/directories
 set wildignore+=.DS_Store,*.bmp,*.gif,*.ico,*.jpg,*.png,*.ico
@@ -225,7 +234,7 @@ endif
 autocmd Filetype gitcommit setlocal spell textwidth=72
 
 " auto change the directory to the current file I am currently editing
-autocmd BufEnter * lcd %:p:h
+" autocmd BufEnter * lcd %:p:h
 
 " Key mappings
 "
@@ -337,6 +346,10 @@ inoremap jkj <Esc>
 nnoremap <Leader>r :redraw!<CR>
 " Make Q meaningless (Q: Entering to Ex mode)
 nnoremap Q <nop>
+
+" format pasted text automatically and correct bad indent while pasting
+:nnoremap p p=`]
+" perform normal paste without indenting
 
 " Abbreviations and auto-completions
 
