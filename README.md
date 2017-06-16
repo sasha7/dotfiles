@@ -15,7 +15,7 @@ so if you encounter problems with them, you're pretty much on your own.
 Usage is straightforward.
 
 ```
-$ git clone https://github.com/aaronbieber/dotfiles.git ~/dotfiles
+$ git clone https://github.com/sasha7/dotfiles.git ~/dotfiles
 ```
 
 ## TODO
