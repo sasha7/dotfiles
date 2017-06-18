@@ -1,6 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
-export TERM=xterm-256color
+# export TERM=xterm-256color
 
 # 10ms for key sequences
 export KEYTIMEOUT=1
@@ -35,10 +35,10 @@ DISABLE_AUTO_UPDATE="true"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="false"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="false"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -57,7 +57,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(colorize zsh-autosuggestions history-substring-search zsh-syntax-highlights)
+plugins=(zsh-autosuggestions history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -95,4 +95,6 @@ alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="subl ~/.oh-my-zsh"
 alias homestead='cd ~/Homestead56 && vagrant $*'
 alias ag='ag --path-to-ignore ~/.gitignore'
+# Generate uuid v4
+alias uuid="python -c 'import sys,uuid; sys.stdout.write(uuid.uuid4().hex)' | pbcopy && pbpaste && echo"
 
