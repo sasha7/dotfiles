@@ -13,14 +13,13 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'scrooloose/nerdtree'
+" Plugin 'scrooloose/nerdtree'
 Plugin 'mattn/emmet-vim'
 " Plugin 'pangloss/vim-javascript'
 Plugin 'mileszs/ack.vim'
 Plugin 'christoomey/vim-tmux-navigator'
 " Plugin 'othree/yajs.vim'
 " Plugin 'othree/es.next.syntax.vim'
-" Plugin 'vim-scripts/SyntaxComplete'
 " Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'tomtom/tlib_vim'
 Plugin 'altercation/vim-colors-solarized'
@@ -40,6 +39,8 @@ syntax enable
 " Display line for cursor
 set nocursorline
 
+let g:ctrlp_mruf_relative = 1
+
 " In Git commit messages, also colour the 51st column (for titles)
 autocmd FileType gitcommit set colorcolumn+=51
 
@@ -54,9 +55,9 @@ set clipboard=unnamed
 
 
 set hidden                      " hide buffers instead of closing them this
-                                "    means that the current buffer can be put
-                                "    to background without being written; and
-                                "    that marks and undo history are preserved
+"    means that the current buffer can be put
+"    to background without being written; and
+"    that marks and undo history are preserved
 
 " Faster escape timeout
 set timeoutlen=1000 ttimeoutlen=0
@@ -85,7 +86,6 @@ highlight htmlArg cterm=italic
 
 " Tell Vim to look in my home directory for more ctags
 set tags+=tags;$HOME
-
 " Enable alignment
 let g:neoformat_basic_format_align = 1
 
@@ -286,9 +286,6 @@ nnoremap <C-y> 2<C-y>
 nnoremap / /\v
 vnoremap / /\v
 
-" Map ctrl+n to toggle NERDTree
-map <C-n> :NERDTreeToggle<cr>
-
 " tab navigation mappings
 map tn :tabn<CR>
 map tp :tabp<CR>
@@ -337,6 +334,8 @@ map <leader>m :Neoformat<CR>
 " assign buffer list and most recent used with ctrlp plugin
 nnoremap <silent> <leader>e :CtrlPMRU<CR>
 nnoremap <silent> <leader>b :CtrlPBuffer<CR>
+let g:ctrlp_map='<c-p>'
+let g:ctrlp_cmd = 'CtrlPMRU'
 
 " Handy command-line mode
 nnoremap ; :
