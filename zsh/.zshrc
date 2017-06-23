@@ -98,3 +98,8 @@ alias ag='ag --path-to-ignore ~/.gitignore'
 # Generate uuid v4
 alias uuid="python -c 'import sys,uuid; sys.stdout.write(uuid.uuid4().hex)' | pbcopy && pbpaste && echo"
 
+# Start and stop postgres
+alias pg-start="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start"
+alias pg-stop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
+alias pg-status="pg_ctl -D /usr/local/var/postgres status"
+
