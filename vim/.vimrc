@@ -105,6 +105,11 @@ set ttyfast
 
 set nospell
 
+" Macvim
+set guifont=Monaco:h14
+set linespace=15
+set visualbell t_vb=
+
 " Jsdoc plugin
 let g:used_javascript_libs = 'jquery,underscore,backbone,react,lo-dash'
 let g:javascript_plugin_jsdoc = 1
