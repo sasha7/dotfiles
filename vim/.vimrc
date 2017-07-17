@@ -109,6 +109,9 @@ set nospell
 set guifont=Monaco:h14
 set linespace=15
 set visualbell t_vb=
+set guioptions-=T " Removes top toolbar
+set guioptions-=r " Removes right hand scroll bar
+set go-=L " Removes left hand scroll bar
 
 " Jsdoc plugin
 let g:used_javascript_libs = 'jquery,underscore,backbone,react,lo-dash'
@@ -169,7 +172,7 @@ call togglebg#map("<F3>")
 set backspace=indent,eol,start    " allow backspacing over everything in insert mode
 set scrolloff=3                   " number of lines to keep off the edges of the screen when scrolling
 set sidescrolloff=5
-set textwidth=80                 " force the cursor onto a new line after 80 characters
+" set textwidth=80                 " force the cursor onto a new line after 80 characters
 set wrapmargin=0
 set whichwrap=h,l,b,<,>,~,[,]
 set autoindent                    " always set autoindenting on
