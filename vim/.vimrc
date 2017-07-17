@@ -26,6 +26,8 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'sbdchd/neoformat'
 Plugin 'rking/ag.vim'
 Plugin 'Raimondi/delimitMate'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'sheerun/vim-polyglot'
 call vundle#end()
 
 " Syntax highlighting
@@ -139,6 +141,9 @@ set splitbelow
 set wildignore+=.DS_Store,*.bmp,*.gif,*.ico,*.jpg,*.png,*.ico
 set wildignore+=*.pdf,*.psd
 set wildignore+=*/node_modules/*
+set wildignore+=*/vendor/*
+set wildignore+=*/storage/*
+set wildignore+=/*public/*
 set wildignore+=*/dist/*
 set wildignore+=*/bower_components/*
 " Disable indentLine by default
@@ -166,7 +171,15 @@ let g:solarized_underline = 1
 let g:solarized_italic = 1
 let g:solarized_contrast = "normal"
 let g:solarized_visibility= "normal"
-colorscheme solarized
+let base16colorspace=256  " Access colors present in 256 colorspace
+if has("gui_running")
+  colorscheme base16-eighties
+else
+  colorscheme solarized
+endif
+
+
+
 call togglebg#map("<F3>")
 
 set backspace=indent,eol,start    " allow backspacing over everything in insert mode
