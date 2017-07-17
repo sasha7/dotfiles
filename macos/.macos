@@ -912,6 +912,11 @@ defaults write com.divisiblebyzero.Spectacle UndoLastMove -data 62706c6973743030
 mdutil -i off /Volumes/Storage
 
 
+# Adjust the window size for MacVim. It adds additional pixel rows on the top and the bottom of the window.
+defaults write org.vim.MacVim MMTextInsetTop 10
+defaults write org.vim.MacVim MMTextInsetBottom 20
+
+
 ###############################################################################
 # Kill affected applications                                                  #
 ###############################################################################
