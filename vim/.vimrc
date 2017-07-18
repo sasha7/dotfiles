@@ -13,7 +13,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
-" Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
 Plugin 'mattn/emmet-vim'
 " Plugin 'pangloss/vim-javascript'
 Plugin 'mileszs/ack.vim'
@@ -28,6 +28,7 @@ Plugin 'rking/ag.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'sheerun/vim-polyglot'
+Plugin 'airblade/vim-gitgutter'
 call vundle#end()
 
 " Syntax highlighting
@@ -149,7 +150,10 @@ set wildignore+=*/bower_components/*
 " Disable indentLine by default
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
+" NERDTree
 let NERDTreeShowHidden=1
+let g:NERDTreeWinSize=60
+
 set showcmd
 set laststatus=2  " Always display the status line
 
@@ -357,6 +361,8 @@ nnoremap <silent> <leader>e :CtrlPMRU<CR>
 nnoremap <silent> <leader>b :CtrlPBuffer<CR>
 let g:ctrlp_map='<c-p>'
 let g:ctrlp_cmd = 'CtrlPMRU'
+
+map <C-n> :NERDTreeToggle<CR>
 
 " Handy command-line mode
 nnoremap ; :
