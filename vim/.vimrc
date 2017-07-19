@@ -28,7 +28,7 @@ Plugin 'rking/ag.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'sheerun/vim-polyglot'
-Plugin 'airblade/vim-gitgutter'
+" Plugin 'airblade/vim-gitgutter'
 call vundle#end()
 
 " Syntax highlighting
@@ -176,13 +176,16 @@ let g:solarized_italic = 1
 let g:solarized_contrast = "normal"
 let g:solarized_visibility= "normal"
 let base16colorspace=256  " Access colors present in 256 colorspace
+
 if has("gui_running")
   colorscheme base16-eighties
+  " Automatically save the session when leaving Vim
+  autocmd! VimLeave * mksession
+  " Automatically load the session when entering vim
+  autocmd! VimEnter * source ~/Session.vim
 else
   colorscheme solarized
 endif
-
-
 
 call togglebg#map("<F3>")
 
