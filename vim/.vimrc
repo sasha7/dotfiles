@@ -180,9 +180,11 @@ let base16colorspace=256  " Access colors present in 256 colorspace
 if has("gui_running")
   colorscheme base16-eighties
   " Automatically save the session when leaving Vim
-  autocmd! VimLeave * mksession
+  autocmd! VimLeave * mksession! session.vim
   " Automatically load the session when entering vim
-  autocmd! VimEnter * source ~/Session.vim
+  if !empty(glob("session.vim"))
+    autocmd! VimEnter * source session.vim
+  endif
 else
   colorscheme solarized
 endif
