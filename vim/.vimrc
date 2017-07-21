@@ -91,7 +91,7 @@ highlight htmlArg cterm=italic
 set tags+=tags;$HOME
 
 " Have Neoformat use &formatprg as a formatter
-let g:neoformat_try_formatprg = 1
+" let g:neoformat_try_formatprg = 1
 
 " Enable alignment
 let g:neoformat_basic_format_align = 1
@@ -104,7 +104,7 @@ let g:neoformat_basic_format_trim = 1
 
 let g:neoformat_sql_sql = {
       \ 'exe': 'sqlformat',
-      \ 'args': ['-a', '-k upper', '-'],
+      \ 'args': ['--reindent', '-k upper', '--wrap_after 80', '-'],
       \ 'stdin': 1,
       \ }
 
