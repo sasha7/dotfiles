@@ -381,6 +381,21 @@ let g:ctrlp_cmd = 'CtrlPMRU'
 
 map <C-n> :NERDTreeToggle<CR>
 
+autocmd BufRead,BufNewFile *.blade.php set filetype=html
+autocmd FileType html,htmldjango,css,scss EmmetInstall
+
+function! s:zen_html_tab()
+  let line = getline('.')
+  if match(line, '<.*>') >= 0
+    return "\<c-y>n"
+  endif
+  return "\<c-y>,"
+endfunction
+
+" autocmd FileType html imap <buffer><expr><tab> <sid>zen_html_tab()
+let g:user_emmet_expandabbr_key='<Tab>'
+imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+
 " Handy command-line mode
 nnoremap ; :
 " <Esc> is too annoying to type
