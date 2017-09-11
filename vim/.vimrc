@@ -13,22 +13,20 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'scrooloose/nerdtree'
 Plugin 'mattn/emmet-vim'
-" Plugin 'pangloss/vim-javascript'
+Plugin 'scrooloose/nerdtree'
+Plugin 'pangloss/vim-javascript'
 Plugin 'mileszs/ack.vim'
-Plugin 'christoomey/vim-tmux-navigator'
-" Plugin 'othree/yajs.vim'
-" Plugin 'othree/es.next.syntax.vim'
-" Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'othree/yajs.vim'
+Plugin 'othree/es.next.syntax.vim'
 Plugin 'tomtom/tlib_vim'
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'sbdchd/neoformat'
 Plugin 'rking/ag.vim'
-Plugin 'Raimondi/delimitMate'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'sheerun/vim-polyglot'
-" Plugin 'airblade/vim-gitgutter'
+Plugin 'othree/html5.vim'
+Plugin 'tpope/vim-commentary'
+"Plugin 'vim-scripts/dbext.vim'
 call vundle#end()
 
 " Syntax highlighting
@@ -43,19 +41,24 @@ syntax enable
 set nocursorline
 
 let g:ctrlp_mruf_relative = 1
+let MRU_Max_Menu_Entries = 50
+
+map <C-n> :NERDTreeToggle<CR>
 
 " In Git commit messages, also colour the 51st column (for titles)
 autocmd FileType gitcommit set colorcolumn+=51
+autocmd FileType gitcommit set colorcolumn+=73
+autocmd BufEnter * :syntax sync fromstart
 
 " ...but absolute numbers on the current line (hybrid numbering)
-set number
+set nonumber
 
 " Set relative line numbers...
-set norelativenumber
+" set norelativenumber
 
 " Fix pasting when using tmux
 set clipboard=unnamed
-
+" let c_minlines=1000
 
 set hidden                      " hide buffers instead of closing them this
 "    means that the current buffer can be put
@@ -83,15 +86,34 @@ let g:netrw_liststyle = 3
 
 highlight Comment cterm=italic
 highlight htmlArg cterm=italic
+highlight ColorColumn ctermbg=0
 " Ensure that italics carry over if I ever switch light/dark scheme
 " autocmd ColorScheme * highlight! Comment cterm=italic
 " autocmd ColorScheme * highlight! htmlArg cterm=italic
+"
+" autocmd BufEnter * :syntax sync fromstart
 
 " Tell Vim to look in my home directory for more ctags
-set tags+=tags;$HOME
+set tags+=tags;
+
+autocmd FileType javascript setlocal formatprg=prettier\ --parser\ flow\ --single-quote\ --stdin
+autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript\ --single-quote\ --stdin
+autocmd FileType css setlocal formatprg=prettier\ --parser\ postcss\ --stdin
+autocmd FileType scss setlocal formatprg=prettier\ --parser\ postcss\ --stdin
+autocmd FileType less setlocal formatprg=prettier\ --stdin
+autocmd FileType json setlocal formatprg=prettier\ --stdin
+
+
+" Per default, netrw leaves unmodified buffers open. This autocommand
+" deletes netrw's buffer once it's hidden (using ':q', for example)
+autocmd FileType netrw setl bufhidden=delete
+
+" Remap :W to :w
+cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
+
 
 " Have Neoformat use &formatprg as a formatter
-" let g:neoformat_try_formatprg = 1
+let g:neoformat_try_formatprg = 1
 
 " Enable alignment
 let g:neoformat_basic_format_align = 1
@@ -104,11 +126,14 @@ let g:neoformat_basic_format_trim = 1
 
 let g:neoformat_sql_sql = {
       \ 'exe': 'sqlformat',
-      \ 'args': ['--reindent', '-k upper', '--wrap_after 80', '-'],
+      \ 'args': ['--reindent', '--keywords upper', '-'],
       \ 'stdin': 1,
       \ }
 
 let g:neoformat_enabled_sql = ['sql']
+let g:neoformat_verbose = 0
+
+let g:ctrlp_root_markers = ['.ctrlp']
 
 " Set relevant filetypes
 "au BufRead,BufNewFile *.scss set filetype=css
@@ -164,10 +189,9 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " NERDTree
 let NERDTreeShowHidden=1
-let g:NERDTreeWinSize=60
-
+let g:NERDTreeWinSize=35
+let NERDTreeIgnore=['\.DS_Store', 'node_modules', 'bower_components', '\.idea', '\.git']
 set showcmd
-set laststatus=2  " Always display the status line
 
 set numberwidth=3
 set lazyredraw
@@ -189,6 +213,7 @@ let g:solarized_contrast = "normal"
 let g:solarized_visibility= "normal"
 let base16colorspace=256  " Access colors present in 256 colorspace
 
+
 if has("gui_running")
   colorscheme base16-eighties
   " Automatically save the session when leaving Vim
@@ -200,8 +225,6 @@ if has("gui_running")
 else
   colorscheme solarized
 endif
-
-call togglebg#map("<F3>")
 
 set backspace=indent,eol,start    " allow backspacing over everything in insert mode
 set scrolloff=3                   " number of lines to keep off the edges of the screen when scrolling
@@ -215,9 +238,9 @@ set smartindent                   " indent on new blocks
 " Write swapfiles to disk a little sooner
 " set updatetime=250
 set expandtab                     " expand tabs by default (overloadable per file type later)
-set smarttab                      " insert tabs on the start of a line according to shiftwidth, not tabstop
+set smarttab                      " insert tabs on the start of a line according to shiftwidt', not tabstop
 set tabstop=2                     " tab spaces size
-set laststatus=2                  " Always display the status line
+set laststatus=0                  " Always display the status line
 set title                         " Show file title in terminal tab
 set softtabstop=2                 " when hitting <BS>, pretend like a tab is removed, even if spaces
 set shiftwidth=2                  " number of spaces to use for autoindenting
@@ -253,7 +276,7 @@ set wildmode=list:longest,full    " command <Tab> completion, list matches, then
 set wrapmargin=0
 
 " Colour the column just after our line limit so that we don’t type over it
-set colorcolumn=+1
+" set colorcolumn=+1
 
 set nomodeline                  " disable mode lines (security measure)
 
@@ -261,9 +284,6 @@ set nomodeline                  " disable mode lines (security measure)
 set matchpairs+=<:>
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
-
-" Setup gitgutter plugin
-let g:gitgutter_sign_column_always = 1
 
 " F2 before pasting to preserve indentation
 set pastetoggle=<F2>
@@ -285,8 +305,6 @@ let mapleader=","
 
 " jj to throw you into normal mode from insert mode
 inoremap jj <Esc>
-" jk to throw you into normal mode from insert mode
-inoremap jk <Esc>
 
 " break a line in normal mode
 nnoremap <NL> i<CR><ESC>
@@ -379,22 +397,9 @@ nnoremap <silent> <leader>b :CtrlPBuffer<CR>
 let g:ctrlp_map='<c-p>'
 let g:ctrlp_cmd = 'CtrlPMRU'
 
-map <C-n> :NERDTreeToggle<CR>
-
+let g:user_emmet_install_global = 0
 autocmd BufRead,BufNewFile *.blade.php set filetype=html
 autocmd FileType html,htmldjango,css,scss EmmetInstall
-
-function! s:zen_html_tab()
-  let line = getline('.')
-  if match(line, '<.*>') >= 0
-    return "\<c-y>n"
-  endif
-  return "\<c-y>,"
-endfunction
-
-" autocmd FileType html imap <buffer><expr><tab> <sid>zen_html_tab()
-let g:user_emmet_expandabbr_key='<Tab>'
-imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
 " Handy command-line mode
 nnoremap ; :
@@ -409,6 +414,9 @@ nnoremap Q <nop>
 :nnoremap p p=`]
 " perform normal paste without indenting
 
+noremap <leader>/ :Commentary<cr>
+" Sane CTRL-l
+nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 " Abbreviations and auto-completions
 
 " lipsum<Tab> drops some Lorem ipsum text into the document
