@@ -42,6 +42,7 @@ set nocursorline
 
 let g:ctrlp_mruf_relative = 1
 let MRU_Max_Menu_Entries = 50
+let g:ctrlp_path_nolim = 1
 
 map <C-n> :NERDTreeToggle<CR>
 
@@ -146,7 +147,7 @@ set ttyfast
 set nospell
 
 " Macvim
-set guifont=Monaco:h14
+set guifont=Monaco:h13
 set linespace=15
 set visualbell t_vb=
 set guioptions-=T " Removes top toolbar
