@@ -13,20 +13,21 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'chriskempson/base16-vim'
 Plugin 'mattn/emmet-vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mileszs/ack.vim'
-Plugin 'othree/yajs.vim'
-Plugin 'othree/es.next.syntax.vim'
 Plugin 'tomtom/tlib_vim'
 Plugin 'sbdchd/neoformat'
-Plugin 'rking/ag.vim'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'othree/html5.vim'
 Plugin 'tpope/vim-commentary'
-"Plugin 'vim-scripts/dbext.vim'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'cohama/lexima.vim'
+Plugin 'ajh17/VimCompletesMe'
+Plugin 'w0rp/ale'
 call vundle#end()
 
 " Syntax highlighting
@@ -44,6 +45,9 @@ let g:ctrlp_mruf_relative = 1
 let MRU_Max_Menu_Entries = 50
 let g:ctrlp_path_nolim = 1
 
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 0
+
 map <C-n> :NERDTreeToggle<CR>
 
 " In Git commit messages, also colour the 51st column (for titles)
@@ -51,15 +55,18 @@ autocmd FileType gitcommit set colorcolumn+=51
 autocmd FileType gitcommit set colorcolumn+=73
 autocmd BufEnter * :syntax sync fromstart
 
-" ...but absolute numbers on the current line (hybrid numbering)
-set nonumber
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
 
-" Set relative line numbers...
-" set norelativenumber
+" this
+set nonumber
+set norelativenumber
 
 " Fix pasting when using tmux
 set clipboard=unnamed
 " let c_minlines=1000
+
+" syntax sync minlines=2000
 
 set hidden                      " hide buffers instead of closing them this
 "    means that the current buffer can be put
@@ -104,14 +111,9 @@ autocmd FileType scss setlocal formatprg=prettier\ --parser\ postcss\ --stdin
 autocmd FileType less setlocal formatprg=prettier\ --stdin
 autocmd FileType json setlocal formatprg=prettier\ --stdin
 
-
 " Per default, netrw leaves unmodified buffers open. This autocommand
 " deletes netrw's buffer once it's hidden (using ':q', for example)
 autocmd FileType netrw setl bufhidden=delete
-
-" Remap :W to :w
-cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
-
 
 " Have Neoformat use &formatprg as a formatter
 let g:neoformat_try_formatprg = 1
@@ -140,19 +142,13 @@ let g:ctrlp_root_markers = ['.ctrlp']
 "au BufRead,BufNewFile *.scss set filetype=css
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.hbs set filetype=html
+autocmd BufNewFile,BufRead *.html set ft=html
 
 " Optimize for fast terminal connections
 set ttyfast
+set ttyscroll=3
 
 set nospell
-
-" Macvim
-set guifont=Monaco:h13
-set linespace=15
-set visualbell t_vb=
-set guioptions-=T " Removes top toolbar
-set guioptions-=r " Removes right hand scroll bar
-set go-=L " Removes left hand scroll bar
 
 " Jsdoc plugin
 let g:used_javascript_libs = 'jquery,underscore,backbone,react,lo-dash'
@@ -175,7 +171,7 @@ set splitright
 set splitbelow
 " Set the working directory to wherever the open file lives (can be problematic)
 " set autochdir
-" set path+=**
+set path+=**
 " Don’t offer to open certain files/directories
 set wildignore+=.DS_Store,*.bmp,*.gif,*.ico,*.jpg,*.png,*.ico
 set wildignore+=*.pdf,*.psd
@@ -185,8 +181,10 @@ set wildignore+=*/storage/*
 set wildignore+=/*public/*
 set wildignore+=*/dist/*
 set wildignore+=*/bower_components/*
-" Disable indentLine by default
-let g:ackprg = 'ag --nogroup --nocolor --column'
+
+if executable('ag')
+  let g:ackprg = 'ag --nogroup --nocolor --column'
+endif
 
 " NERDTree
 let NERDTreeShowHidden=1
@@ -205,32 +203,39 @@ set nowrap                        " no lines wrapping
 
 " theme
 set background=dark
-set t_Co=256
-let g:solarized_termtrans=1
-let g:solarized_bold = 1
-let g:solarized_underline = 1
-let g:solarized_italic = 1
-let g:solarized_contrast = "normal"
-let g:solarized_visibility= "normal"
-let base16colorspace=256  " Access colors present in 256 colorspace
-
 
 if has("gui_running")
-  colorscheme base16-eighties
+  " Macvim
+  set guifont=Monaco:h13
+  set linespace=15
+  set visualbell t_vb=
+  set guioptions-=T " Removes top toolbar
+  set guioptions-=r " Removes right hand scroll bar
+  set go-=L " Removes left hand scroll bar
+  colorscheme base16-material
   " Automatically save the session when leaving Vim
   autocmd! VimLeave * mksession! session.vim
   " Automatically load the session when entering vim
   if !empty(glob("session.vim"))
     autocmd! VimEnter * source session.vim
   endif
+  set number
+  set relativenumber
 else
+  set t_Co=256
+  let g:solarized_termtrans=1
+  let g:solarized_bold = 1
+  let g:solarized_underline = 1
+  let g:solarized_italic = 1
+  let g:solarized_contrast = "normal"
+  let g:solarized_visibility= "normal"
   colorscheme solarized
 endif
 
 set backspace=indent,eol,start    " allow backspacing over everything in insert mode
 set scrolloff=3                   " number of lines to keep off the edges of the screen when scrolling
 set sidescrolloff=5
-" set textwidth=80                 " force the cursor onto a new line after 80 characters
+set textwidth=100                 " force the cursor onto a new line after 100 characters
 set wrapmargin=0
 set whichwrap=h,l,b,<,>,~,[,]
 set autoindent                    " always set autoindenting on
@@ -265,10 +270,11 @@ set list listchars=tab:»·,trail:·,nbsp:·
 set nobackup
 set nowritebackup
 set noswapfile
+set backupcopy=yes " it should save file by writing direcrtly to a file
 
 " history and undo levels
-set history=1000
-set undolevels=1000
+" set history=1000
+" set undolevels=1000
 
 set incsearch                     " show search matches as you type
 set wildmenu                      " show list instead of just completing
@@ -288,10 +294,6 @@ let g:html_indent_tags = 'li\|p'
 
 " F2 before pasting to preserve indentation
 set pastetoggle=<F2>
-
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
 
 " However, in Git commit messages, let’s make it 72 characters
 autocmd Filetype gitcommit setlocal spell textwidth=72
@@ -418,6 +420,18 @@ nnoremap Q <nop>
 noremap <leader>/ :Commentary<cr>
 " Sane CTRL-l
 nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+
+inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<CR>"
+inoremap <expr> <Esc> pumvisible() ? "\<C-e>" : "\<Esc>"
+inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<Up>"
+
+command! Q q
+command! W w
+
+" Close all buffers except this one
+command! BufCloseOthers %bd|e#
+
 " Abbreviations and auto-completions
 
 " lipsum<Tab> drops some Lorem ipsum text into the document
