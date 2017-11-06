@@ -52,3 +52,7 @@ function httpless {
   http --pretty=all --print=hb "$@" | less -R;
 }
 
+function git-blame {
+  ruby ~/bin/git-blame-colored.rb $1 | less -R
+}
+
