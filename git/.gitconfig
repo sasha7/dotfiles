@@ -1,7 +1,7 @@
 [user]
   name = Sasa Macakanja
   email = sasa.macakanja@gmail.com
-  signingkey = B8772064565FC3AE
+	signingkey = 96A9745E90AB0017
 [alias]
   st = status
   ci = commit
@@ -55,6 +55,10 @@
   wdiff = diff --word-diff
   # Make it possible to diff minified code (eww…)
   mindiff = diff -w --word-diff-regex=. --color-words -U0
+  # Ignore/unignore
+  ignore = update-index --assume-unchanged
+  unignore = update-index --no-assume-unchanged
+  ignored = !git ls-files -v | grep "^[[:lower:]]"
 [credentials]
   helper = osxkeychain
 [color]
@@ -81,7 +85,7 @@
 [ghi]
   token = !security find-internet-password -a sasha7 -s github.com -l 'ghi token' -w
 [merge]
-  tool = vimdiff
+	tool = vim
   conflictstyle = diff3
 [push]
   default = simple
@@ -93,7 +97,7 @@
   prune = true
 [commit]
   template = /Users/sasa/.git-commit-template
-  gpgsign = true
+  gpgsign = false
 [diff]
   tool = vimdiff
 [difftool]
@@ -103,5 +107,7 @@
 [mergetool]
   keepBackup = false
 [gpg]
-  program = gpg2
+	program = gpg2
 
+[credential]
+	helper = osxkeychain
