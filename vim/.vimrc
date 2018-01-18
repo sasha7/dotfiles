@@ -17,7 +17,7 @@ Plug 'othree/html5.vim'
 Plug 'tpope/vim-commentary'
 Plug 'cohama/lexima.vim'
 Plug 'ajh17/VimCompletesMe'
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 Plug 'dracula/vim'
 " Initialize plugin system
 call plug#end()
@@ -32,6 +32,7 @@ let g:ctrlp_path_nolim = 1
 
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
+let g:ale_sign_column_always = 1
 
 map <C-n> :NERDTreeToggle<CR>
 
@@ -43,9 +44,9 @@ autocmd BufEnter * :syntax sync fromstart
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
-" this
-set nonumber
-set norelativenumber
+
+set number
+set relativenumber
 
 " Fix pasting when using tmux
 set clipboard=unnamed
