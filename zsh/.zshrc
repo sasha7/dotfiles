@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH="$HOME/bin:/usr/local/bin:~/Library/Python/3.6/bin:$HOME/bin/apache-maven-3.5.4/bin:$HOME/.npm-packages/bin:$PATH"
+export PATH="$HOME/bin:/usr/local/bin:~/Library/Python/3.7/bin:HOME/bin/apache-maven-3.5.4/bin:$HOME/.npm-packages/bin:$PATH"
 # export TERM=xterm-256color
 #
 export VISUAL=vim
@@ -24,13 +24,18 @@ bindkey '^xe' edit-command-line
 bindkey '^x^e' edit-command-line
 # Vi style:
 # bindkey -M vicmd v edit-command-line
+#
+#
+bindkey "^[[A" history-beginning-search-backward
+bindkey "^[[B" history-beginning-search-forward
 
 
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG='en_US.UTF-8'
+export LC_ALL='en_US.UTF-8'
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
