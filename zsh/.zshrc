@@ -47,7 +47,7 @@ export LC_TIME="en_US.UTF-8"
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='mvim'
+  export EDITOR='vim'
 fi
 
 # Compilation flags
@@ -62,8 +62,11 @@ fi
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias vim='mvim -v'
-alias vi='mvim -v'
+# alias vim='mvim -v'
+# alias vi='mvim -v'
+alias vim="nvim"
+alias vi="nvim"
+alias vimdiff="nvim -d"
 alias zshconfig="vim ~/.zshrc"
 alias ag='ag --path-to-ignore ~/.gitignore'
 # Generate uuid v4
@@ -98,37 +101,15 @@ fi
 # export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/openjdk-11.0.2.jdk/Contents/Home"
 
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-nvm() {
-    unset -f nvm
-    export NVM_DIR=~/.nvm
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-    nvm "$@"
+export NVM_DIR="$HOME/.nvm"
+nvm_load () {
+  . $NVM_DIR/nvm.sh
+  . $NVM_DIR/bash_completion
 }
+alias node='unalias nvm; unalias node; unalias npm; nvm_load; node $@'
+alias npm='unalias nvm; unalias node; unalias npm; nvm_load; npm $@'
+alias nvm='unalias nvm; unalias node; unalias npm; nvm_load; nvm $@'
 
-node() {
-    unset -f node
-    export NVM_DIR=~/.nvm
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-    node "$@"
-}
-
-npm() {
-    unset -f npm
-    export NVM_DIR=~/.nvm
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-    npm "$@"
-}
-###-begin-npm-completion-###
-#
-# npm command completion script
-#
-# Installation: npm completion >> ~/.bashrc  (or ~/.zshrc)
-# Or, maybe: npm completion > /usr/local/etc/bash_completion.d/npm
-#
 
 if type complete &>/dev/null; then
   _npm_completion () {
@@ -222,3 +203,6 @@ if [[ "$TERM_PROGRAM" == "Apple_Terminal" ]] && [[ -z "$INSIDE_EMACS" ]]; then
     # Tell the terminal about the initial directory.
     update_terminal_cwd
 fi
+
+
+
