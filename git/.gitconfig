@@ -1,7 +1,7 @@
 [user]
   name = Sasa Macakanja
   email = sasa.macakanja@gmail.com
-	signingkey = 96A9745E90AB0017
+  signingkey = 96A9745E90AB0017
 [alias]
   st = status
   ci = commit
@@ -41,6 +41,7 @@
   recap = log --oneline --no-merges --author=sasa.macakanja@gmail.com
    # See today’s work
   today = log --since=\"00:00:00\" --all --no-merges --oneline --author=sasa.macakanja@gmail.com
+  yesterday = log --since=\"yesterday.midnight\" --all --no-merges --oneline --author=sasa.macakanja@gmail.com
   # Empty line between results from different files.
   find = "!git grep --break -C1"
   # Show your ten most recently checked out branches
@@ -59,7 +60,9 @@
   ignore = update-index --assume-unchanged
   unignore = update-index --no-assume-unchanged
   ignored = !git ls-files -v | grep "^[[:lower:]]"
-[credentials]
+  all = "!f() { ls | xargs -I{} sh -c \"echo {}; git -C {} $1\"; }; f"
+  wadded= log --diff-filter=A
+[credentials]i
   helper = osxkeychain
 [color]
   diff = auto
@@ -78,17 +81,18 @@
   new = green
 [core]
   editor = vim
-  excludesfile = /Users/sasa/.gitignore
+  excludesfile = ~/.gitignore
   whitespace = warn
+  pager = less -FRX --tabs=4
 [github]
   user = sasha7
 [ghi]
   token = !security find-internet-password -a sasha7 -s github.com -l 'ghi token' -w
 [merge]
-	tool = vim
+  tool = vim
   conflictstyle = diff3
 [push]
-  default = simple
+ default = current
 [pull]
   rebase = true
 [rerere]
@@ -96,7 +100,7 @@
 [fetch]
   prune = true
 [commit]
-  template = /Users/sasa/.git-commit-template
+  template = ~/.git-commit-template
   gpgsign = false
 [diff]
   tool = vimdiff
@@ -107,7 +111,18 @@
 [mergetool]
   keepBackup = false
 [gpg]
-	program = gpg2
-
+ program = gpg2
 [credential]
 	helper = osxkeychain
+[oh-my-zsh]
+ hide-status = 1
+[merge "npm-merge-driver"]
+  name = automatically merge npm lockfiles
+  driver = npx npm-merge-driver merge %A %O %B %P
+[pager]
+  # " = true" means use pager defined in [core]
+  add      = true
+  diff     = true
+  difftool = true
+  log      = true
+  show     = true
