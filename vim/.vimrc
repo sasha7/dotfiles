@@ -1,7 +1,10 @@
 set nocompatible
+
 " Use UTF-8 by default
 set encoding=utf-8
 set fileencoding=utf-8
+
+set re=1
 
 call plug#begin('~/.vim/plugged')
 Plug 'ctrlpvim/ctrlp.vim'
@@ -17,8 +20,9 @@ Plug 'othree/html5.vim'
 Plug 'tpope/vim-commentary'
 Plug 'cohama/lexima.vim'
 Plug 'ajh17/VimCompletesMe'
+Plug 'leafgarland/typescript-vim'
 " Plug 'w0rp/ale'
-Plug 'dracula/vim'
+" Plug 'dracula/vim'
 " Initialize plugin system
 call plug#end()
 
@@ -45,11 +49,14 @@ autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
 
-set number
-set relativenumber
+set nonumber
+set norelativenumber
 
 " Fix pasting when using tmux
 set clipboard=unnamed
+if has("unnamedplus") " X11 support
+    set clipboard+=unnamedplus
+endif
 " let c_minlines=1000
 
 " syntax sync minlines=2000
@@ -80,11 +87,14 @@ let g:netrw_liststyle = 3
 highlight Comment cterm=italic
 highlight htmlArg cterm=italic
 highlight ColorColumn ctermbg=0
+
 " Ensure that italics carry over if I ever switch light/dark scheme
 " autocmd ColorScheme * highlight! Comment cterm=italic
 " autocmd ColorScheme * highlight! htmlArg cterm=italic
 "
 " autocmd BufEnter * :syntax sync fromstart
+" :
+highlight CursorLine cterm=NONE ctermbg=DarkGray  ctermfg=white guibg=darkred guifg=white
 
 autocmd FileType javascript setlocal formatprg=prettier\ --parser\ flow\ --single-quote\ --stdin
 autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript\ --single-quote\ --stdin
@@ -174,22 +184,21 @@ set background=dark
 if has("gui_running")
   " Macvim
   set guifont=Monaco:h12
-  set linespace=15
+  colorscheme desert
+  set linespace=10
   set visualbell t_vb=
   set guioptions-=T " Removes top toolbar
   set guioptions-=r " Removes right hand scroll bar
   set go-=L " Removes left hand scroll bar
-  colorscheme dracula
   " Automatically save the session when leaving Vim
-  autocmd! VimLeave * mksession! session.vim
+  " autocmd! VimLeave * mksession! session.vim
   " Automatically load the session when entering vim
-  if !empty(glob("session.vim"))
-    autocmd! VimEnter * source session.vim
-  endif
+  " if !empty(glob("session.vim"))
+    " autocmd! VimEnter * source session.vim
+  " endif
 else
   set t_Co=256
   set background=dark
-  colorscheme dracula
 endif
 
 set backspace=indent,eol,start    " allow backspacing over everything in insert mode
